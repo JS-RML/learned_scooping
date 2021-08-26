@@ -2,7 +2,7 @@ We have designed a model-based [scooping](https://github.com/HKUST-RML/Scooping)
 
 There are five parameters to be predicted: the finger position 𝑝, the horizontal distance between two fingers 𝑑, the ZYX Euler angle representation of the gripper orientation: yaw 𝛼, pitch 𝛽, and roll 𝛾. We design a hierarchical three-tier learning method. The input of the framework is the RGB-D image of the bin scenario. Tier 1 outputs the prediction of finger position 𝑝, and yaw 𝛼. Tier 2 predicts the distance 𝑑. Tier 3 predicts another two parameters: 𝛽 and 𝛾. See the following figure: 
 <p align = "center">
-<img src="files/tier1_2_3" width="360" height="202">   
+<img src="files/tier1_2_3.jpg" width="360" height="202">   
 </p>
 
 
