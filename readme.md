@@ -8,6 +8,14 @@ There are five parameters to be predicted: the finger position 𝑝, the horizon
 <img src="files/tier1_2_3.jpg" width="770" height="311">   
 </p>
 
+<p align = "center">
+<img src="files/exp_Go_stone.gif" width="360" height="202">   
+<img src="files/exp_domino.gif" width="360" height="202">   
+<img src="files/exp_hete_Acrylic_seen.gif" width="360" height="202">   
+<img src="files/exp_hete_Acrylic_unseen.gif" width="360" height="202"> 
+<img src="files/exp_key.gif" width="360" height="202">
+</p>
+
 ## 3. Prerequisites
 ### 3.1 Hardware
 - [**Universal Robot UR10**](https://www.universal-robots.com/products/ur10-robot/)
