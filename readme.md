@@ -21,7 +21,7 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - [**Urx**](https://github.com/SintefManufacturing/python-urx) for UR10 robot control
 - [**robotiq_2finger_grippers**](https://github.com/chjohnkim/robotiq_2finger_grippers.git): ROS driver for Robotiq Adaptive Grippers
 - [**PyBullet**](https://pybullet.org/wordpress/) for collision check
-- [**PyTorch**](https://pytorch.org/)
+- [**PyTorch**](https://pytorch.org/) for constructing and training the network.
 
 
 
