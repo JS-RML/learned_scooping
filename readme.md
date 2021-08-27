@@ -43,7 +43,6 @@ We use a Realsense L515 camera to get the RGB image and the depth image. Then, w
 ```
 python utils/heightmap.py
 ```
-- [**RGB-D Heightmap**](https://drive.google.com/file/d/1e2mthzXt8YYgJAtQHj9AOsfDxgdWG1B9/view?usp=sharing)
 
 ### 2. Annotating Software
 I also write an annotating software to label the data. 
