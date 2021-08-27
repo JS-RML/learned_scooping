@@ -34,6 +34,10 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - [**PyBullet**](https://pybullet.org/wordpress/) for collision check
 - [**PyTorch**](https://pytorch.org/) for constructing and training the network
 
+## 4. Annotating Software
+I also write an annotating software to label the data. 
+`Scooping/instance_segmentation/samples/plastic_cards/plastic_cards_detection_ros.py` is for Tier 1, where the pixel where should (not) be the target finger position should be labeled green (red).
+`Scooping/instance_segmentation/samples/plastic_cards/plastic_cards_detection_ros.py` is for Tier 2. We need to label the target thumb position given the target finger position.
 ## Maintenance 
 For any technical issues, please contact: Tierui He (theae@connect.ust.hk).
 
