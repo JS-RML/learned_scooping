@@ -31,8 +31,10 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - [**ROS Kinetic**](http://wiki.ros.org/ROS/Installation)
 - [**Urx**](https://github.com/SintefManufacturing/python-urx) for UR10 robot control
 - [**robotiq_2finger_grippers**](https://github.com/chjohnkim/robotiq_2finger_grippers.git): ROS driver for Robotiq Adaptive Grippers
+- [**pySerial**](https://github.com/pyserial/pyserial) for accessing arduino through serial connection and control the extendable finger.
 - [**PyBullet**](https://pybullet.org/wordpress/) for collision check
 - [**PyTorch**](https://pytorch.org/) for constructing and training the network
+- [**pyrealsense2**](https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python): A python wrapper for realsense camera.
 
 ## 4. Training the Network
 - Train Tier 1:
