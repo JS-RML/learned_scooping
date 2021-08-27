@@ -36,17 +36,17 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - [**PyTorch**](https://pytorch.org/) for constructing and training the network
 - [**pyrealsense2**](https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python): A python wrapper for realsense camera.
 
-## 4. Training the Network
+## 4. Annotating Software
+I also write an annotating software to label the data. 
+- `learned_scooping/annotating_software/label_Tier1.py` is for Tier 1, where the pixel where should (not) be the target finger position should be labeled green (red).
+- `learned_scooping/annotating_software/label_Tier2.py` is for Tier 2. We need to label the target thumb position given the target finger position.
+
+## 5. Training the Network
 - Train Tier 1: `learned_scooping/training_program/training_tier1.ipynb`
 - Train Tier 2: `learned_scooping/training_program/training_tier2.ipynb`
 - Train Tier 3: `learned_scooping/training_program/training_tier3.ipynb`
 
 **Note**: The online compiler [**Jupyter Notebook**](https://jupyter.org/) is needed to run our program.
-
-## 5. Annotating Software
-I also write an annotating software to label the data. 
-- `learned_scooping/annotating_software/label_Tier1.py` is for Tier 1, where the pixel where should (not) be the target finger position should be labeled green (red).
-- `learned_scooping/annotating_software/label_Tier2.py` is for Tier 2. We need to label the target thumb position given the target finger position.
 
 ## 6. Network Parameters
 - Network parameters for Tier 1: [**netparam_Tier1.pkl**](https://drive.google.com/file/d/1VOIXfqVoNxwKSW5DBbMA_HiNmP9dOBLd/view?usp=sharing)
