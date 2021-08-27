@@ -66,7 +66,7 @@ I also write an annotating software to label the data.
 ## 7. Test on Real UR10 Robot:
 Please run the following program: `learned_scooping/test_on_real_robot.py`
 
-Before running the program, please first download the network parameters and save them to a proper position. Then, change the corresponding address in the code.
+Before running the program, please first download the network parameters and save them to a proper position. Then, change the corresponding address in the code (line 40, line 42, and line 44).
 
 This can be successfully applied to the cluster of Go stones, domino blockes, Acrylic borads and key-shape 3D-printed models.
 ## Maintenance 
