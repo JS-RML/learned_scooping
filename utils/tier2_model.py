@@ -1,4 +1,4 @@
-import torch
+submodule2import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -40,7 +40,7 @@ class BasicBlock(nn.Module):
  
         return out
 
-class Submodule2(nn.Module):
+class Tier2(nn.Module):
         
     def __init__(self, pcpt_block, pcpt_layers, scoop_block, scoop_layers, h, w, pcpt_is_upsample=0, scoop_is_upsample=0):
         self.inplanes = 64
