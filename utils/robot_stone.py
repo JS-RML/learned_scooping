@@ -238,23 +238,17 @@ class Robot():
             print(ini_aperture, "Wrong ini aperture!")
             raise NameError("Wrong ini aperture!")
         self.gp_control_distance(ini_aperture, delay_time = 0.5)
-        print('execute0')
         #time.sleep(0.5)
         self.control_exted_thumb.set_thumb_length_int(0, wait_time = 0.5)
         #time.sleep(0.5)
-        print('execute1')
         eefPose = self.rob.get_pose()
         time.sleep(0.3)
         eefPose = eefPose.get_pose_vector()
         self.rob.translate((pos[0]-eefPose[0]-0.004,pos[1]-eefPose[1],0), acc=0.5, vel=0.8)
-        print('execute2')
         self.rob.movel_tool((0,0,0,0,0,rot_z), acc=0.5, vel=0.8)
-        print('execute3')
         self.rob.translate((0,0,pos[2]-eefPose[2]+0.01), acc=0.05, vel=0.05)
-        print('execute4')
         self.rob.movel_tool((0,0,0,0,pi/2-theta,0), acc=0.5, vel=0.8, wait=True)
         self.rob.movel_tool((0,0,0,roll,0,0), acc=0.5, vel=0.8, wait=True)
-        print('execute5')
         self.rob.translate((0, 0, -0.03), acc=0.01, vel=0.01, wait=False)
         ini_force_z = self.getFT300SensorData()[2]
         time0 = time.time()
@@ -264,13 +258,11 @@ class Robot():
                 self.rob.stopl()
                 break
             force_z = self.getFT300SensorData()[2]
-            #print(force_z)
             if force_z < ini_force_z-1.3: #key 2  #Acrylic 1.8 #Go stone 1.3
                 num_large_force += 1
             if time.time()-time0>3.3:  
                 break 
         time.sleep(0.1)
-        print('execute6')
         ini_torque_y = self.getFT300SensorData()[4]
         shortest_thumb_length = self.control_exted_thumb.shortest_thumb_length
         longest_thumb_length = self.finger_length-ini_aperture/tan(theta)+thumb_extend
@@ -279,7 +271,6 @@ class Robot():
             torque_y = self.getFT300SensorData()[4]
             if torque_y>ini_torque_y+0.2:
                 break
-        print('execute7')
         for aperture_distance in np.arange(ini_aperture, -1e-5, -0.002):
             aperture_angle = self.from_aperture_distance_to_angle(aperture_distance, self.l0, self.l1, self.l2l, self.l2r)
             next_aperture_angle = self.from_aperture_distance_to_angle(aperture_distance-0.002, self.l0, self.l1, self.l2l, self.l2r)
@@ -290,7 +281,6 @@ class Robot():
             self.rob.translate_tool((sin(theta)*translate_dir_dis[0]+cos(theta)*translate_dir_dis[1], 0, cos(theta)*translate_dir_dis[0]-sin(theta)*translate_dir_dis[1]), acc=0.1, vel=0.4, wait=False)
             #time.sleep(0.5)
         self.gp_control_int(220, delay_time = 0.1)
-        print('execute8')
         self.rob.translate_tool((0, 0, -0.12), acc=0.4, vel=1, wait=True)
         self.go_to_home_up()
         self.go_to_home()
