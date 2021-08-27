@@ -40,6 +40,7 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - Train Tier 1: `learned_scooping/training_program/training_tier1.ipynb`
 - Train Tier 2: `learned_scooping/training_program/training_tier2.ipynb`
 - Train Tier 3: `learned_scooping/training_program/training_tier3.ipynb`
+
 **Note**: The online compiler [**Jupyter Notebook**](https://jupyter.org/) is needed to run our program.
 
 ## 5. Annotating Software
