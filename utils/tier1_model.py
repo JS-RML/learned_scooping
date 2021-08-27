@@ -39,7 +39,7 @@ class BasicBlock(nn.Module):
 
         return out
 
-class ResNet(nn.Module):
+class Tier1(nn.Module):
 
     def __init__(self, pcpt_block, pcpt_layers, scoop_block, scoop_layers, h, w, pcpt_is_upsample=0, scoop_is_upsample=0):
         self.inplanes = 64
