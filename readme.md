@@ -37,9 +37,9 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - [**pyrealsense2**](https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python): A python wrapper for realsense camera.
 
 ## 4. Training the Network
-- Train Tier 1:
-- Train Tier 2:
-- Train Tier 3:
+- Train Tier 1: `learned_scooping/training_program/training_tier1.ipynb`
+- Train Tier 2: `learned_scooping/training_program/training_tier2.ipynb`
+- Train Tier 3: `learned_scooping/training_program/training_tier3.ipynb`
 
 ## 5. Annotating Software
 I also write an annotating software to label the data. 
