@@ -20,12 +20,12 @@ import heightmap
 import math3d as m3d
 import random
 from math import *
-import pcpt_scoop_res
 import scipy
 from torch import nn
 from PIL import Image
-import submodule2
-import module_pitch_roll
+import tier1_module
+import tier2_module
+import tier3_module
 from datetime import datetime
 from random import choice
 
@@ -36,13 +36,12 @@ htmap_h = 200
 workspace_limits_raw = np.array([[-0.015, 0.115], [0.63, 0.76], [0.02, 0.1]])
 workspace_limits_list = [np.array([[-0.015, 0.05], [0.63, 0.695], [0.02, 0.1]]), np.array([[0.0175, 0.0825], [0.63, 0.695], [0.02, 0.1]]), np.array([[0.05, 0.115], [0.63, 0.695], [0.015, 0.1]]), np.array([[-0.015, 0.05], [0.6625, 0.7275], [0.02, 0.1]]), np.array([[0.0175, 0.0825], [0.6625, 0.7275], [0.02, 0.1]]), np.array([[0.05, 0.115], [0.6625, 0.7275], [0.02, 0.1]]), np.array([[-0.015, 0.05], [0.695, 0.76], [0.02, 0.1]]), np.array([[0.0175, 0.0825], [0.695, 0.76], [0.02, 0.1]]), np.array([[0.05, 0.115], [0.695, 0.76], [0.02, 0.1]])]
 heightmap_resolution = 0.0013/4.0
-net = pcpt_scoop_res.ResNet(pcpt_block=pcpt_scoop_res.BasicBlock, pcpt_layers=[1,5,1], scoop_block=pcpt_scoop_res.BasicBlock, scoop_layers=[1,5,1], h=htmap_h, w=htmap_w).cuda()     # define the network
-#net.load_state_dict(torch.load('net_20210605.pkl'))    # go stone
-net.load_state_dict(torch.load('net_parameters/net_20210709.pkl'))    # domino
-net_submodule2 = submodule2.Submodule2(pcpt_block=submodule2.BasicBlock, pcpt_layers=[1,1,1], scoop_block=submodule2.BasicBlock, scoop_layers=[1,1,1], h=200, w=200).cuda()
-net_submodule2.load_state_dict(torch.load('net_parameters/net_20210709_submodule2_2.pkl'))
-net_pitch_roll = module_pitch_roll.Module_pitch_roll(pcpt_block=submodule2.BasicBlock, pcpt_layers=[1,5,1], scoop_block=submodule2.BasicBlock, scoop_layers=[1,5,1], h=200, w=200).cuda()
-net_pitch_roll.load_state_dict(torch.load('net_parameters/network_pitch_roll_20210817.pkl'))
+net = tier1_module.Tier1(pcpt_block=tier1_module.BasicBlock, pcpt_layers=[1,5,1], scoop_block=tier1_module.BasicBlock, scoop_layers=[1,5,1], h=htmap_h, w=htmap_w).cuda()     # define the network
+net.load_state_dict(torch.load('netparam_Tier1.pkl'))    # domino
+net_submodule2 = tier2_module.Tier2(pcpt_block=tier2_module.BasicBlock, pcpt_layers=[1,1,1], scoop_block=tier2_module.BasicBlock, scoop_layers=[1,1,1], h=200, w=200).cuda()
+net_submodule2.load_state_dict(torch.load('netparam_Tier2.pkl'))
+net_submodule3 = tier3_module.Tier3(pcpt_block=tier3_module.BasicBlock, pcpt_layers=[1,5,1], scoop_block=tier3_module.BasicBlock, scoop_layers=[1,5,1], h=200, w=200).cuda()
+net_submodule3.load_state_dict(torch.load('netparam_Tier3.pkl'))
 
 def point_position_after_rotation(current_xy, rotation_pole, desired_angle):
     desired_angle_rad = desired_angle*pi/180
@@ -71,23 +70,6 @@ def from_pixel_to_world_position(pixel, workspace_limits, heightmap_resolution, 
 def main():
     total_index = 0
     robot = Robot("192.168.1.102")
-    datatime_now = datetime.now().strftime("%Y%m%d_%H%M%S")
-    str0 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/image_with_antipodal_pair_' + datatime_now
-    str1 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/RGB_image_' + datatime_now
-    str2 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/depth_image_' + datatime_now
-    str3 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/finger_position_' + datatime_now
-    str4 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/thumb_position_' + datatime_now
-    str5 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/pitch_' + datatime_now
-    str6 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/roll_' + datatime_now
-    str7 = '/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/success_' + datatime_now
-    os.makedirs(str0)
-    os.makedirs(str1)
-    os.makedirs(str2)
-    os.makedirs(str3)
-    os.makedirs(str4)
-    os.makedirs(str5)
-    os.makedirs(str6)
-    os.makedirs(str7)
     while True:
         while True:
             whether_continue = input('Whether continue? (y or n) Shuffle!')
@@ -95,18 +77,6 @@ def main():
                 break
         max_score_pixel_list = []
         color_img_array, depth_array = robot.getCameraData()
-        '''
-        color_img_array = np.load('/home/terry/catkin_ws/src/dg_learning_real_one_net/picture_20210422/color_img/1_color_img.npy')
-        depth_array = np.load('/home/terry/catkin_ws/src/dg_learning_real_one_net/picture_20210422/depth_img/1_depth_img.npy')
-        cam_intrinsics = np.asarray([[612.0938720703125, 0, 321.8862609863281], [0, 611.785888671875, 238.18316650390625], [0, 0, 1]])
-        eeTcam = np.array([[0, -1, 0, 0.142],
-                           [1, 0, 0, -0.003],
-                           [0, 0, 1, 0.0934057+0.03],
-                           [0, 0, 0, 1]])
-        baseTee = np.array([[0, 1, 0, 0.05511], [1, 0, 0, 0.54732], [0, 0, -1, 0.37707], [0, 0, 0, 1]])
-        baseTcam = np.matmul(baseTee, eeTcam)
-        heightmap_resolution = 0.0013/4.0
-        '''
 
         for workspace_limits in workspace_limits_list:
             #color_heightmap, depth_heightmap = heightmap.get_heightmap(color_img_array, depth_array, cam_intrinsics, baseTcam, workspace_limits, heightmap_resolution)
@@ -226,19 +196,10 @@ def main():
             print('pos: ', pos, ' yaw: ', yaw, ' aperture: ', ini_aperture, 'pitch: ', pitch, ' roll: ', roll)
             if robot.collision_check_scooping(pos, yaw, ini_aperture, theta=pitch*pi/180, roll=roll*pi/180)==True:
                 continue
-            #print(color_heightmap_raw[pix_y_mid, pix_x_mid]-color_heightmap_raw[pix_y_prime, pix_x_prime])
-            #print(color_heightmap_raw[pix_y_mid, pix_x_mid]-color_heightmap_raw[pix_y_prime_enlong, pix_x_prime_enlong])
-            #if (abs(color_difference1[0])<20 or abs(color_difference1[0])>240) and (abs(color_difference1[1])<20 or abs(color_difference1[1])>240) and (abs(color_difference1[2])<20 or abs(color_difference1[2])>240):
-                #continue
-            #if (abs(color_difference2[0])<20 or abs(color_difference2[0])>240) and (abs(color_difference2[1])<20 or abs(color_difference2[1])>240) and (abs(color_difference2[2])<20 or abs(color_difference2[2])>240):
-                #continue
-            #print(color_heightmap_raw[pix_y_mid, pix_x_mid]-color_heightmap_raw[pix_y_prime_enlong, pix_x_prime_enlong])
             cv2.arrowedLine(copy_color_heightmap, (pix_x_prime, pix_y_prime), (pix_x, pix_y), (0, 0, 255), 2)
             test_image = cv2.flip(copy_color_heightmap, 1)
-            #cv2.imshow("visualization",test_image*255)
             f = plt.figure(1)
             plt.imshow(test_image[:,:,[2,1,0]])
-            plt.savefig(str0+'/'+str(total_index)+'.png')
             plt.rcParams["keymap.quit"] = 'enter'
             plt.show()
             whether_collision = input("Whether collision? (y or n)")
@@ -248,45 +209,9 @@ def main():
             if yaw>0:
                 pos=[pos[0]+0.001*sin(yaw), pos[1]+0.001*cos(yaw), pos[2]]
                 pass
-            #else:
-                #pos=[pos[0]+0.002*sin(-yaw), pos[1]-0.002*cos(-yaw), pos[2]]
-                #pass
-            #plt.imshow(color_heightmap_raw.astype(np.uint8))
-            #plt.show()
-            np.save(str1+'/'+str(total_index)+'.npy', color_heightmap_raw.astype(np.uint8))
-            np.save(str2+'/'+str(total_index)+'.npy', ((depth_heightmap_raw/0.1)*255).astype(np.uint8))
-            #plt.imshow(((depth_heightmap_raw/0.1)*255).astype(np.uint8))
-            #plt.show()
-            np.save(str3+'/'+str(total_index)+'.npy', np.array([pix_x, pix_y]))
-            #print([pix_x, pix_y])
-            np.save(str4+'/'+str(total_index)+'.npy', np.array([pix_x_prime, pix_y_prime]))
-            #print([pix_x_prime, pix_y_prime])
-            np.save(str5+'/'+str(total_index)+'.npy', np.array([pitch]))
-            #print(pitch)
-            np.save(str6+'/'+str(total_index)+'.npy', np.array([roll]))
-            #print(roll)
             grasp_success = robot.exe_scoop(pos, yaw, ini_aperture, thumb_extend=0.003, theta = pitch*pi/180, roll = roll*pi/180) #key 0.015 #Acrylic 0.008 #Go stone 0.003
-            np.save(str7+'/'+str(total_index)+'.npy', np.array([grasp_success]))
-            txt_file=open('/home/terry/catkin_ws/src/dg_learning_real_one_net/data_pitch_roll/label_'+datatime_now+'.txt',"a")
-            txt_file.write('yaw: '+str(yaw)+' aperture: '+str(ini_aperture)+' pitch: '+str(pitch)+' roll: '+str(roll))
-            txt_file.write('\n')
-            txt_file.close()
             total_index += 1
             break
 
 if __name__ == '__main__':
     main()
-    '''
-    kkk = cv2.imread('/home/terry/catkin_ws/src/dg_learning_real_one_net/picture_20210422/depth_heightmap/8_depth_heightmap.jpg', -1)
-    max_score_pixel = np.unravel_index(np.argmax(kkk), kkk.shape)
-    max_score_pixel = [max_score_pixel[1], max_score_pixel[0]]
-    print('max_score_pixel', max_score_pixel)
-    kkk_image = Image.fromarray(kkk)
-    rotated_kkk = np.array(kkk_image.rotate(angle = 45, fillcolor = 0)).astype(np.uint8) 
-    max_score_pixel = np.unravel_index(np.argmax(rotated_kkk), rotated_kkk.shape)
-    max_score_pixel = [max_score_pixel[1], max_score_pixel[0]]
-    print('max_score_pixel', max_score_pixel)
-    max_score_pixel = point_position_after_rotation([max_score_pixel[0], 400-max_score_pixel[1]], [200, 200], -45)
-    max_score_pixel = [max_score_pixel[0], 400-max_score_pixel[1]]
-    print('max_score_pixel', max_score_pixel)
-    '''
