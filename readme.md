@@ -34,17 +34,22 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - [**PyBullet**](https://pybullet.org/wordpress/) for collision check
 - [**PyTorch**](https://pytorch.org/) for constructing and training the network
 
-## 4. Annotating Software
+## 4. Training the Network
+- Train Tier 1:
+- Train Tier 2:
+- Train Tier 3:
+
+## 5. Annotating Software
 I also write an annotating software to label the data. 
 - `learned_scooping/annotating_software/label_Tier1.py` is for Tier 1, where the pixel where should (not) be the target finger position should be labeled green (red).
 - `learned_scooping/annotating_software/label_Tier2.py` is for Tier 2. We need to label the target thumb position given the target finger position.
 
-## 5. Network Parameters
+## 6. Network Parameters
 - Network parameters for Tier 1: [**netparam_Tier1.pkl**](https://drive.google.com/file/d/1VOIXfqVoNxwKSW5DBbMA_HiNmP9dOBLd/view?usp=sharing)
 - Network parameters for Tier 2: [**netparam_Tier2.pkl**](https://drive.google.com/file/d/1WtL7sQy0A652arjwMEe4Qs3RpkObTl3j/view?usp=sharing)
 - Network parameters for Tier 3: [**netparam_Tier3.pkl**](https://drive.google.com/file/d/1e4cDDbj0rh-cjz0KHTtU_HtDcCwiDG7q/view?usp=sharing)
 
-## 6. Test on Real UR10 Robot:
+## 7. Test on Real UR10 Robot:
 Please run the following program: `learned_scooping/annotating_software/label_Tier2.py`
 
 ## Maintenance 
