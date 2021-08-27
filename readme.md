@@ -40,12 +40,12 @@ I also write an annotating software to label the data.
 - `learned_scooping/annotating_software/label_Tier2.py` is for Tier 2. We need to label the target thumb position given the target finger position.
 
 ## 5. Network Parameters
-- Network parameters for Tier 1:
-- Network parameters for Tier 2:
-- Network parameters for Tier 3:
+- Network parameters for Tier 1: [**netparam_Tier1.pkl**](https://drive.google.com/file/d/1VOIXfqVoNxwKSW5DBbMA_HiNmP9dOBLd/view?usp=sharing)
+- Network parameters for Tier 2: [**netparam_Tier2.pkl**](https://drive.google.com/file/d/1WtL7sQy0A652arjwMEe4Qs3RpkObTl3j/view?usp=sharing)
+- Network parameters for Tier 3: [**netparam_Tier3.pkl**](https://drive.google.com/file/d/1e4cDDbj0rh-cjz0KHTtU_HtDcCwiDG7q/view?usp=sharing)
 
 ## 6. Test on Real UR10 Robot:
-Please run the following program:
+Please run the following program: `learned_scooping/annotating_software/label_Tier2.py`
 
 ## Maintenance 
 For any technical issues, please contact: Tierui He (theae@connect.ust.hk).
