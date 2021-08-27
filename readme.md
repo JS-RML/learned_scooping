@@ -36,7 +36,16 @@ This implementation requires the following dependencies (tested on Ubuntu 16.04 
 - [**PyTorch**](https://pytorch.org/) for constructing and training the network
 - [**pyrealsense2**](https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python): A python wrapper for realsense camera.
 
-## 4. Annotating Software
+## 4. Making Heightmap and Annotating Software
+
+### 1. Make Heightmap
+We use a Realsense L515 camera to get the RGB image and the depth image. Then, we combine the RGB image and the depth image to make the RGB-D heightmap. A heightmap is an RGB-D image obtained from a 3D point cloud, describing the 3D information of the bin scenario. Each pixel in the heightmap is in linear relation to its horizontal position in the world frame and corresponds to a value indicating the height-from-bottom information. 
+```
+python utils/heightmap.py
+```
+- [**RGB-D Heightmap**](https://drive.google.com/file/d/1e2mthzXt8YYgJAtQHj9AOsfDxgdWG1B9/view?usp=sharing)
+
+### 2. Annotating Software
 I also write an annotating software to label the data. 
 - `learned_scooping/annotating_software/label_Tier1.py` is for Tier 1, where the pixel where should (not) be the target finger position should be labeled green (red).
 - `learned_scooping/annotating_software/label_Tier2.py` is for Tier 2. We need to label the target thumb position given the target finger position.
