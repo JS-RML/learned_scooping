@@ -44,6 +44,8 @@ We use a Realsense L515 camera to get the RGB image and the depth image. Then, w
 python utils/heightmap.py
 ```
 
+Here is the set of heightmaps describing the cluster of Go stones, domino blockes, Acrylic borads: [**image set**](https://drive.google.com/file/d/16ZRlpwpydlClJe8BO14yqvpfjpRSPi6Z/view?usp=sharing)
+
 ### 2. Annotating Software
 I also write an annotating software to label the data. 
 - `learned_scooping/annotating_software/label_Tier1.py` is for Tier 1, where the pixel where should (not) be the target finger position should be labeled green (red). You can choose the shape and size of the brush.
