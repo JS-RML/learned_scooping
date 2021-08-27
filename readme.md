@@ -54,8 +54,9 @@ I also write an annotating software to label the data.
 - Network parameters for Tier 3: [**netparam_Tier3.pkl**](https://drive.google.com/file/d/1e4cDDbj0rh-cjz0KHTtU_HtDcCwiDG7q/view?usp=sharing)
 
 ## 7. Test on Real UR10 Robot:
-Please run the following program: `learned_scooping/annotating_software/label_Tier2.py`
+Please run the following program: `learned_scooping/test_on_real_robot.py`
 
+This can be successfully applied to the cluster of Go stones, domino blockes, Acrylic borads and key-shape 3D-printed models.
 ## Maintenance 
 For any technical issues, please contact: Tierui He (theae@connect.ust.hk).
 
